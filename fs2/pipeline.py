@@ -88,6 +88,20 @@ def prepare(preprocess_config, rows, frontend, speaker_fn, test_sentences=()):
     print(f"Lexicon: {lex_path} ({len(lexicon)} words)")
 
 
+def available_cpus():
+    """CPUs actually granted to this container (cgroup quota), not the host's core count."""
+    try:
+        quota, period = open("/sys/fs/cgroup/cpu.max").read().split()[:2]
+        if quota != "max":
+            return max(1, int(int(quota) / int(period)))
+    except (OSError, ValueError):
+        pass
+    try:
+        return len(os.sched_getaffinity(0))
+    except AttributeError:
+        return os.cpu_count() or 1
+
+
 def align(preprocess_config, mode, pretrained_model=None, num_jobs=None):
     """mode: 'pretrained' (mfa align with a downloaded model) or 'train' (mfa train from scratch)."""
     p = preprocess_config["path"]
@@ -97,18 +111,22 @@ def align(preprocess_config, mode, pretrained_model=None, num_jobs=None):
                          "(`micromamba activate aligner`) or export MFA_CMD='micromamba run -n aligner mfa'.")
     raw, tg = p["raw_path"], p["textgrid_path"]
     lex = os.path.join(p["preprocessed_path"], "lexicon.txt")
-    jobs = str(num_jobs or max(1, (os.cpu_count() or 2) - 1))
+    jobs = str(num_jobs or max(1, available_cpus() - 1))
+    # MFA names its working directory after the corpus folder; both languages use a folder
+    # called "raw", so give each language its own MFA root to avoid clobbering a parallel run.
+    env = dict(os.environ)
+    env.setdefault("MFA_ROOT_DIR", os.path.join(os.path.dirname(p["raw_path"]), "mfa_work"))
     if os.path.exists(tg):
         shutil.rmtree(tg)
     common = ["-j", jobs, "--clean", "--overwrite", "--beam", "100", "--retry_beam", "400"]
     if mode == "pretrained":
-        subprocess.run(mfa_cmd + ["model", "download", "acoustic", pretrained_model], check=False)
+        subprocess.run(mfa_cmd + ["model", "download", "acoustic", pretrained_model], check=False, env=env)
         cmd = mfa_cmd + ["align", raw, lex, pretrained_model, tg] + common
     else:
         model_out = os.path.join(p["preprocessed_path"], "mfa_acoustic_model.zip")
         cmd = mfa_cmd + ["train", raw, lex, model_out, "--output_directory", tg] + common
     print(" ".join(cmd))
-    subprocess.run(cmd, check=True)
+    subprocess.run(cmd, check=True, env=env)
     n = sum(f.endswith(".TextGrid") for _, _, fs in os.walk(tg) for f in fs)
     print(f"TextGrids written: {n}")
 

@@ -8,7 +8,10 @@ mkdir -p logs
 export MAMBA_ROOT_PREFIX=${MAMBA_ROOT_PREFIX:-/opt/micromamba}
 export MFA_CMD=${MFA_CMD:-"micromamba run -n aligner mfa"}
 : "${HF_TOKEN:?export HF_TOKEN=hf_... first (Svarah is gated)}"
-NPROC=$(nproc); JOBS=$(( NPROC > 3 ? NPROC / 2 : 1 ))
+# CPUs granted to the container (cgroup quota) - `nproc` reports the host's cores on vast.ai
+NPROC=$(python -c "import sys; sys.path.insert(0,'.'); from fs2.pipeline import available_cpus; print(available_cpus())")
+JOBS=$(( NPROC > 3 ? NPROC / 2 : 1 ))
+echo "Using $NPROC CPUs -> $JOBS jobs per language"
 
 run_lang () {
   local L=$1

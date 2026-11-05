@@ -152,7 +152,8 @@ class Preprocessor:
         self.hop_length = p["stft"]["hop_length"]
         self.pitch_normalization = p["pitch"]["normalization"]
         self.energy_normalization = p["energy"]["normalization"]
-        self.num_workers = num_workers or max(1, (os.cpu_count() or 2) - 1)
+        from fs2.pipeline import available_cpus
+        self.num_workers = num_workers or max(1, available_cpus() - 1)
         self.worker_cfg = {
             "raw_path": self.raw_path,
             "textgrid_path": self.textgrid_path,
