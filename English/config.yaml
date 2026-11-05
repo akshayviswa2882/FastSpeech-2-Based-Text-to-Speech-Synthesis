@@ -1,0 +1,101 @@
+# FastSpeech 2 - English (Svarah, Indian-accented English, multi-speaker)
+# Relative paths are resolved against this file's folder.
+language: english
+
+preprocess:
+  dataset: Svarah
+  source:
+    hf_name: ai4bharat/Svarah        # gated: accept terms on HF and export HF_TOKEN
+    hf_split: test                   # Svarah ships a single 'test' split (6,656 clips, ~9.6 h)
+    local_manifest: null             # alternative: path to svarah_manifest.json from the GitHub release
+  selection:
+    train_hours: 5.0
+    val_hours: 1.0
+    min_duration: 1.0                # seconds
+    max_duration: 15.0               # decoder max_seq_len 1500 frames ~ 17.4 s
+    min_words: 2
+    min_chars_per_sec: 6.0
+    max_chars_per_sec: 22.0
+    min_snr_db: 12.0                 # p95-p10 frame-RMS dB; drops very noisy crowd-sourced clips
+    speaker_cap_frac: 0.03           # no speaker > 3% of the 6 h budget (117 speakers)
+    seed: 1234
+  path:
+    raw_path: ../data/English/raw                  # MFA corpus: <speaker>/<uid>.wav|.lab
+    textgrid_path: ../data/English/TextGrid
+    preprocessed_path: ../data/English/preprocessed
+  alignment:
+    mode: pretrained
+    pretrained_model: english_us_arpa
+  preprocessing:
+    text:
+      language: en
+    audio:
+      sampling_rate: 22050
+      max_wav_value: 32768.0
+    stft:
+      filter_length: 1024
+      hop_length: 256
+      win_length: 1024
+    mel:
+      n_mel_channels: 80
+      mel_fmin: 0
+      mel_fmax: 8000                 # HiFi-GAN universal vocoder expects 8 kHz
+    pitch:
+      feature: phoneme_level
+      normalization: true
+    energy:
+      feature: phoneme_level
+      normalization: true
+
+model:
+  transformer:
+    encoder_layer: 4
+    encoder_head: 2
+    encoder_hidden: 256
+    decoder_layer: 6
+    decoder_head: 2
+    decoder_hidden: 256
+    conv_filter_size: 1024
+    conv_kernel_size: [9, 1]
+    encoder_dropout: 0.2
+    decoder_dropout: 0.2
+  variance_predictor:
+    filter_size: 256
+    kernel_size: 3
+    dropout: 0.5
+  variance_embedding:
+    pitch_quantization: linear
+    energy_quantization: linear
+    n_bins: 256
+  multi_speaker: true
+  max_seq_len: 1500
+  vocoder:
+    model: HiFi-GAN
+    speaker: universal
+
+train:
+  seed: 1234
+  num_workers: 4
+  path:
+    ckpt_path: ./checkpoints
+    log_path: ../logs/English
+    result_path: ../Results/English
+  optimizer:
+    batch_size: 16
+    group_size: 4
+    betas: [0.9, 0.98]
+    eps: 0.000000001
+    weight_decay: 0.0
+    grad_clip_thresh: 1.0
+    grad_acc_step: 1
+    warm_up_step: 4000
+    anneal_steps: [60000, 80000, 90000]
+    anneal_rate: 0.3
+  step:
+    total_step: 100000
+    log_step: 100
+    val_step: 1000
+    save_step: 10000
+
+inference:
+  speaker: auto        # 'auto' = speaker with the most training audio; or a name from speakers.json

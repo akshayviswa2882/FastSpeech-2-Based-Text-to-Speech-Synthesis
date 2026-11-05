@@ -1,0 +1,9 @@
+data/
+logs/
+**/checkpoints/full/
+**/checkpoints/*.pth.tar
+!**/checkpoints/fastspeech2_*.pth.tar
+fs2/hifigan/generator_universal.pth.tar
+__pycache__/
+*.pyc
+.ipynb_checkpoints/

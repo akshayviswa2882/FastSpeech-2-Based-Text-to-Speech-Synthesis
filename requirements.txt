@@ -1,0 +1,25 @@
+# Python >= 3.9. Tested with torch 2.x (CUDA) on an RTX-class GPU.
+torch>=2.1
+numpy>=1.23
+scipy>=1.10
+librosa>=0.10
+soundfile>=0.12
+pyworld>=0.3.4
+tgt>=1.4.4
+scikit-learn>=1.2
+matplotlib>=3.7
+pyyaml>=6.0
+tqdm>=4.65
+tensorboard>=2.13
+# text frontends
+g2p_en==2.1.0
+inflect>=7.0
+nltk>=3.8
+# data download
+datasets>=2.18
+huggingface_hub>=0.20
+# ASR evaluation
+transformers>=4.40
+accelerate>=0.28
+jiwer>=3.0
+# Montreal Forced Aligner is installed separately into a conda env (see scripts/setup_vast.sh)
