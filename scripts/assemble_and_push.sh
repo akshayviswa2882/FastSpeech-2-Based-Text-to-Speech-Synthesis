@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
-# Copy trained artefacts from a training workspace into this repo and push to GitHub.
+# Copy trained artefacts into this repo and push to GitHub (works in Git Bash on Windows).
 #
-#   bash scripts/assemble_and_push.sh /workspace/project https://github.com/<user>/<repo>.git
+#   bash scripts/assemble_and_push.sh <artifacts_dir> https://github.com/<user>/<repo>.git
 #
+# <artifacts_dir> is either the training workspace itself or the extracted fs2_artifacts.tar.gz
+# (same layout: <Lang>/checkpoints, Results/<Lang>, logs/<Lang>, data/<Lang>/preprocessed).
 # Needs GH_TOKEN (classic PAT with `repo` scope) in the environment. Copies:
 #   <Lang>/checkpoints/{fastspeech2_<lang>.pth.tar, stats.json, speakers.json, inference_meta.json}
 #   Results/<Lang>/ (test audio, variance-adaptor plots, loss curves, asr_eval.json)
@@ -14,12 +16,13 @@ URL=${2:?usage: assemble_and_push.sh <training_workspace> <github_https_url>}
 : "${GH_TOKEN:?export GH_TOKEN=ghp_... (classic token with repo scope)}"
 cd "$(dirname "$0")/.."
 
+command -v git-lfs >/dev/null 2>&1 || git lfs version >/dev/null 2>&1 || { echo "Install Git LFS first (https://git-lfs.com)"; exit 1; }
 for L in English Telugu; do
   l=$(echo "$L" | tr 'A-Z' 'a-z')
   mkdir -p "$L/checkpoints" "Results/$L/logs" "Results/$L/data"
   cp "$SRC/$L/checkpoints/fastspeech2_$l.pth.tar" "$SRC/$L/checkpoints/stats.json" \
      "$SRC/$L/checkpoints/speakers.json" "$SRC/$L/checkpoints/inference_meta.json" "$L/checkpoints/"
-  rsync -a --exclude '.gitkeep' "$SRC/Results/$L/" "Results/$L/"
+  cp -r "$SRC/Results/$L/." "Results/$L/"
   cp "$SRC/logs/$L/train_log.csv" "$SRC/logs/$L/val_log.csv" "Results/$L/logs/" 2>/dev/null || true
   cp "$SRC/data/$L/preprocessed/data_report.json" "$SRC/data/$L/preprocessed/preprocess_report.json" \
      "Results/$L/data/" 2>/dev/null || true
