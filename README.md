@@ -7,16 +7,61 @@ Two non-autoregressive TTS models trained from scratch on **~5 h of speech each*
 | | English | Telugu |
 |---|---|---|
 | Corpus | [Svarah](https://huggingface.co/datasets/ai4bharat/Svarah) — Indian-accented English, crowd-sourced, 117 speakers | [IndicTTS Telugu](https://huggingface.co/datasets/SPRINGLab/IndicTTS_Telugu) — studio, 1 male + 1 female |
-| Train / val | 5 h / 1 h, speaker-stratified, audio- and transcript-disjoint | 5 h / 1 h, 2.5 h + 0.5 h per speaker |
+| Train / val (selected audio) | 4.97 h / 1.13 h — 3,064 / 671 clips, 115 speakers in both | 5.0 h / 1.0 h — 2,168 / 434 clips, 2 speakers |
+| Train / val (speech after silence trimming) | 4.65 h / 1.06 h | 4.19 h / 0.85 h |
 | Text frontend | normaliser (times, dates, numbers) + g2p_en (CMUdict, POS-based heteronyms, neural OOV) | **new**: rule-based Telugu G2P + Telugu number/date/time normaliser |
-| Alignment | MFA, pretrained `english_us_arpa` + corpus lexicon from the same G2P | MFA acoustic model **trained on the corpus** (no pretrained Telugu model exists) |
+| Alignment | MFA, pretrained `english_us_arpa` + corpus lexicon from the same G2P | MFA acoustic model **trained on the corpus** (no pretrained Telugu model exists; recipe without SAT) |
 | Vocoder | HiFi-GAN (universal, pretrained) | HiFi-GAN (universal, pretrained) |
 
 Results: audio for every test sentence, duration / F0 / energy plots of the variance adaptor,
 loss curves, and an ASR-based intelligibility evaluation (CER/WER of synthesised vs. recorded
 speech) are in [`Results/`](Results/).
 
-<!-- RESULTS-TABLE: filled in after training -->
+
+## Results
+
+Both models: 100k steps, batch 16, checkpoint at step 100k (chosen by listening, see below).
+Training took 7.4 h for English (sharing the GPU) and 2.2 h for Telugu (alone, 12.7 it/s) on one RTX 6000 Ada.
+
+### Intelligibility (ASR on 60 random validation sentences + the 5 test sentences)
+
+ASR: `openai/whisper-large-v3` (English), `vasista22/whisper-telugu-large-v2` (Telugu).
+"Real recordings" is the ASR error on the original validation audio, i.e. the floor; "synthesis" is
+FastSpeech 2 + HiFi-GAN speaking the same sentences with the same speaker.
+
+| CER / WER (%) | English | Telugu |
+|---|---|---|
+| Real recordings (val) | 2.67 / 5.48 | 4.39 / 28.86 |
+| **Synthesis (val)** | **9.24 / 16.20** | **6.46 / 33.60** |
+| CER gap (synthesis ÷ real) | 3.5× | 1.5× |
+| Synthesis (test sentences) | 11.48 / 25.81 | 3.14 / 19.51 |
+
+CER is the meaningful metric for Telugu: it is agglutinative, so long words make WER harsh even on
+real recordings (28.9 %). Per-utterance transcripts are in `Results/<Lang>/asr_eval.json`.
+
+### Observations
+
+- **Data quality beats data quantity per speaker.** Telugu (2 studio speakers, ~2.5 h each) loses
+  far less intelligibility relative to real speech than English (115 crowd-sourced phone recordings,
+  ~2.5 min per speaker): a 1.5× vs 3.5× CER gap with the same model, steps and amount of audio.
+- **English prosody does not generalise at 2.5 min/speaker.** Validation pitch and duration losses
+  plateau after ~1k steps (pitch ≈ 0.42, duration ≈ 0.23) while the training losses fall to ≈ 0.01:
+  the model learns each speaker's mean pitch and rate quickly, then memorises clip-level prosody.
+  Duration targets are also noisy, because a US-English aligner was applied to Indian-accented speech.
+- **Validation mel loss is a poor model-selection criterion.** Its minimum (English: step 10k)
+  sounded clearly worse than 50k–100k. The loss uses ground-truth durations and pitch, so it never
+  scores the model's own prosody. Final checkpoints were picked by listening; `val_best.pth.tar` is kept.
+- **Heteronyms work through the frontend:** both "conduct" sentences (noun E2a, verb E2b) are
+  transcribed perfectly (0 % CER); g2p_en's POS-based lookup gives `K AA1 N D AH0 K T` vs
+  `K AA0 N D AH1 K T`. Telugu పట్టు (grip / silk, T2a/T2b) is a true homograph with identical
+  pronunciation, so identical output is the correct behaviour.
+- **Very long rare words are the main English failure:** E1 "antidisestablishmentarianism"
+  (22 % CER, heard as "van dyck's establishment in his…") — a neural-G2P guess plus long-run
+  duration drift. The equally long Telugu loanword న్యూరోఫార్మకోలాజికల్ (T1) is read correctly,
+  since Telugu spelling is phonemic and the rule-based G2P is exact.
+- **Telugu forced alignment needed a different MFA recipe.** MFA parallelises per speaker, so
+  speaker-adaptive training on a 2-speaker corpus ran on ~2 cores at >1 h per iteration. Dropping
+  the SAT stages (monophone → triphone → LDA) aligned 2,602 / 2,620 clips in 17 minutes.
 
 ---
 
@@ -96,7 +141,7 @@ Report/
 
 ## Reproducing
 
-Hardware used: 1× RTX 4090 (24 GB), 16 vCPU, 64 GB RAM. Both models train concurrently on the one GPU.
+Hardware used: 1× RTX 6000 Ada (48 GB), ~10 vCPU, 50 GB RAM (vast.ai). Data prep ≈ 2 h, training 2–7 h per model.
 
 ```bash
 git clone <this repo> && cd <repo>

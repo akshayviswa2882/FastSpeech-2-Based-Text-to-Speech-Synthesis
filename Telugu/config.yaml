@@ -102,4 +102,4 @@ train:
 
 inference:
   checkpoint: latest   # latest | val_best | <step>; chosen by listening (val-loss minimum sounded worse)
-  speaker: auto        # 'auto' = speaker with the most training audio; or te_female / te_male
+  speaker: auto        # 'auto' = speaker with the most training audio; or te_0 / te_1 (IndicTTS gender column is numeric)
