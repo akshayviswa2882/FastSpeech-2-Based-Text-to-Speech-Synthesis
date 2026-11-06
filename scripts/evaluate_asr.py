@@ -31,7 +31,9 @@ DEFAULT_ASR = {"english": "openai/whisper-large-v3", "telugu": "vasista22/whispe
 def norm_for_scoring(text, frontend):
     text = frontend.normalize_text(text)  # same number/time expansion on both sides
     text = unicodedata.normalize("NFC", text).lower()
-    text = re.sub(r"[^\w\s']", " ", text)
+    # strip punctuation/symbols only: `[^\w]` would also delete Telugu vowel signs and the
+    # virama (Unicode Mn/Mc marks are not \w), silently scoring consonant skeletons only
+    text = "".join(" " if unicodedata.category(c)[0] in "PS" and c != "'" else c for c in text)
     return re.sub(r"\s+", " ", text).strip()
 
 
