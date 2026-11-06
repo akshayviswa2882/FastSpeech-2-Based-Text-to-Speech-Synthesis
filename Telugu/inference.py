@@ -1,7 +1,7 @@
 """Telugu inference: synthesise the assignment test sentences (or custom text) and plot
 the variance-adaptor predictions (duration / pitch / energy).
 
-  python Telugu/inference.py                          # all test sentences, best checkpoint
+  python Telugu/inference.py                          # all test sentences, checkpoint from config
   python Telugu/inference.py --speaker <name>         # pick a training speaker (see speakers.json)
   python Telugu/inference.py --text "..." --id custom # one custom sentence
 """
@@ -22,7 +22,7 @@ from fs2.utils.model import load_config  # noqa: E402
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--config", default=os.path.join(HERE, "config.yaml"))
-    ap.add_argument("--ckpt", default=None, help="default: checkpoints/best.pth.tar, else latest")
+    ap.add_argument("--ckpt", default=None, help="explicit checkpoint path (default: inference.checkpoint in config)")
     ap.add_argument("--speaker", default=None)
     ap.add_argument("--text", default=None)
     ap.add_argument("--id", default="custom")
@@ -30,7 +30,7 @@ def main():
     args = ap.parse_args()
 
     p, m, t, cfg = load_config(args.config)
-    ckpt = resolve_checkpoint(t["path"]["ckpt_path"], args.ckpt)
+    ckpt = resolve_checkpoint(t["path"]["ckpt_path"], args.ckpt, cfg.get("inference", {}).get("checkpoint", "latest"))
     use_exported_stats_if_needed(p, ckpt)
     speaker, speaker_id = resolve_speaker(p, args.speaker or cfg.get("inference", {}).get("speaker"))
     print(f"checkpoint: {ckpt}\nspeaker: {speaker} (id {speaker_id})")

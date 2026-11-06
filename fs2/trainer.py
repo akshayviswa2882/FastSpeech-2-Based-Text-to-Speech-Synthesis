@@ -5,7 +5,8 @@ Changes vs. reference:
     picks up the latest checkpoint automatically (useful on preemptible GPUs).
   * Losses are also written to CSV (train_log.csv / val_log.csv) so the loss
     curves required by the assignment can be plotted without TensorBoard.
-  * Best checkpoint by validation mel-postnet loss is kept as best.pth.tar.
+  * Checkpoint with the lowest validation mel loss is also kept as val_best.pth.tar
+    (for reference; inference defaults to the latest step, see fs2/synthesis.py).
   * nn.DataParallel removed (single GPU); TF32 enabled; DataLoader workers.
 """
 
@@ -30,7 +31,7 @@ LOSS_NAMES = ["total_loss", "mel_loss", "postnet_mel_loss", "pitch_loss", "energ
 
 def latest_checkpoint(ckpt_dir):
     ckpts = glob.glob(os.path.join(ckpt_dir, "*.pth.tar"))
-    steps = [(int(m.group(1)), p) for p in ckpts if (m := re.search(r"(\d+)\.pth\.tar$", p))]
+    steps = [(int(m.group(1)), p) for p in ckpts if (m := re.search(r"(?:^|/)(\d+)\.pth\.tar$", p))]
     return max(steps)[1] if steps else None
 
 
@@ -111,7 +112,7 @@ def train(configs, resume=True, device=None):
     clip = train_config["optimizer"]["grad_clip_thresh"]
     train_csv = os.path.join(paths["log_path"], "train_log.csv")
     val_csv = os.path.join(paths["log_path"], "val_log.csv")
-    best_path = os.path.join(paths["ckpt_path"], "best.pth.tar")
+    best_path = os.path.join(paths["ckpt_path"], "val_best.pth.tar")
     best_val = float("inf")
     if os.path.exists(best_path):
         best_val = torch.load(best_path, map_location="cpu", weights_only=False).get("val_postnet_mel_loss", best_val)
@@ -166,7 +167,7 @@ def train(configs, resume=True, device=None):
                     if val[2] < best_val:
                         best_val = val[2]
                         save(best_path, {"val_postnet_mel_loss": best_val})
-                        bar.write(f"[val] new best postnet mel loss {best_val:.4f} -> best.pth.tar")
+                        bar.write(f"[val] new best postnet mel loss {best_val:.4f} -> val_best.pth.tar")
 
                 if step % save_step == 0 or step == total_step:
                     save(os.path.join(paths["ckpt_path"], f"{step}.pth.tar"))

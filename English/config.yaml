@@ -100,4 +100,5 @@ train:
     save_step: 10000
 
 inference:
+  checkpoint: latest   # latest | val_best | <step>; chosen by listening (val-loss minimum sounded worse)
   speaker: auto        # 'auto' = speaker with the most training audio; or a name from speakers.json

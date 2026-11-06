@@ -72,7 +72,8 @@ def main():
         wav16 = librosa.resample(wav, orig_sr=sr, target_sr=16000)
         return asr({"raw": wav16, "sampling_rate": 16000}, generate_kwargs=gen)["text"]
 
-    synth = Synthesizer((p, m, t), resolve_checkpoint(t["path"]["ckpt_path"], args.ckpt))
+    synth = Synthesizer((p, m, t), resolve_checkpoint(t["path"]["ckpt_path"], args.ckpt,
+                                                     cfg.get("inference", {}).get("checkpoint", "latest")))
     spk_name, spk_id = resolve_speaker(p, cfg.get("inference", {}).get("speaker"))
     with open(os.path.join(p["path"]["preprocessed_path"], "speakers.json")) as f:
         speakers = json.load(f)

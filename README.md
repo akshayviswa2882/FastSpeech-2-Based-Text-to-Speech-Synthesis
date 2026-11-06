@@ -71,7 +71,7 @@ deletion as in Hindi). The normaliser expands `2026` → రెండు వే�
 | Split | Speaker-stratified, duration-targeted 5 h / 1 h split decided upstream (the reference uses a random `val_size` cut). |
 | Languages | Per-language symbol tables (ARPAbet with stress for English; new Telugu phone set) instead of one mixed table; new Telugu G2P and normaliser; English normaliser for times and dates. |
 | Portability | Runs on current PyTorch / librosa: removed hard-coded `.cuda()` in the STFT, fixed librosa ≥ 0.10 API calls, added `weights_only=False` for torch ≥ 2.6, device taken from tensors. |
-| Training | One `config.yaml` per language; auto-resume; CSV loss logs; best-on-validation checkpoint; vectorised length regulator; multiprocess feature extraction. |
+| Training | One `config.yaml` per language; auto-resume; CSV loss logs; val-best checkpoint kept for reference (final model chosen by listening, see below); vectorised length regulator; multiprocess feature extraction. |
 | Evaluation | Variance-adaptor plots per test sentence; ASR-based CER/WER evaluation. |
 
 Unchanged from the reference: Transformer encoder/decoder (FFT blocks), variance predictors,

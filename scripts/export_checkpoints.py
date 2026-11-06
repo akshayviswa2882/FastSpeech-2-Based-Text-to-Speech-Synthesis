@@ -1,6 +1,6 @@
 """Export slim, submission-ready checkpoints (model weights only, no optimizer state).
 
-For each language: <Lang>/checkpoints/best.pth.tar (or latest step) ->
+For each language: checkpoint selected by inference.checkpoint in config (default: latest step) ->
   <Lang>/checkpoints/fastspeech2_<lang>.pth.tar   (~140 MB, tracked with Git LFS)
   <Lang>/checkpoints/stats.json, speakers.json, inference_meta.json
 so `python <Lang>/inference.py` works on a fresh clone without the preprocessed data.
@@ -23,7 +23,7 @@ from fs2.utils.model import load_config  # noqa: E402
 for lang in sys.argv[1:] or ["English", "Telugu"]:
     p, m, t, cfg = load_config(os.path.join(ROOT, lang, "config.yaml"))
     ckpt_dir, pre = t["path"]["ckpt_path"], p["path"]["preprocessed_path"]
-    src = resolve_checkpoint(ckpt_dir)
+    src = resolve_checkpoint(ckpt_dir, None, cfg.get("inference", {}).get("checkpoint", "latest"))
     ck = torch.load(src, map_location="cpu", weights_only=False)
     dst = os.path.join(ckpt_dir, f"fastspeech2_{lang.lower()}.pth.tar")
     torch.save({"model": ck["model"], "step": ck.get("step"), "source": os.path.basename(src),

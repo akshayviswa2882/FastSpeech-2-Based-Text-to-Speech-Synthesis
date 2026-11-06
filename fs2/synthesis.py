@@ -22,17 +22,32 @@ from fs2.utils.model import get_model, get_vocoder, vocoder_infer
 from fs2.utils.tools import to_device
 
 
-def resolve_checkpoint(ckpt_dir, ckpt=None):
+def resolve_checkpoint(ckpt_dir, ckpt=None, prefer="latest"):
+    """Pick the checkpoint for inference.
+
+    ckpt   : explicit path (wins).
+    prefer : "latest" (highest step), "val_best" (lowest validation mel loss), or a step number.
+    Falls back to an exported fastspeech2_<lang>.pth.tar (fresh clone).
+
+    We default to "latest": validation mel L1 is measured with ground-truth durations / pitch,
+    so it does not see the model's own prosody, and the val-loss minimum (10k steps for English)
+    sounded clearly worse than 50k-100k in listening tests.
+    """
     if ckpt:
         return ckpt
-    best = os.path.join(ckpt_dir, "best.pth.tar")
-    if os.path.exists(best):
-        return best
-    steps = [(int(m.group(1)), p) for p in glob.glob(os.path.join(ckpt_dir, "*.pth.tar"))
-             if (m := re.search(r"(\d+)\.pth\.tar$", p))]
+    steps = sorted((int(m.group(1)), p) for p in glob.glob(os.path.join(ckpt_dir, "*.pth.tar"))
+                   if (m := re.search(r"(?:^|/)(\d+)\.pth\.tar$", p)))
+    prefer = str(prefer or "latest")
+    if prefer == "val_best" and os.path.exists(os.path.join(ckpt_dir, "val_best.pth.tar")):
+        return os.path.join(ckpt_dir, "val_best.pth.tar")
+    if prefer.isdigit():
+        path = os.path.join(ckpt_dir, f"{prefer}.pth.tar")
+        if os.path.exists(path):
+            return path
+        raise FileNotFoundError(path)
     if steps:
-        return max(steps)[1]
-    exported = sorted(glob.glob(os.path.join(ckpt_dir, "*.pth.tar")))
+        return steps[-1][1]
+    exported = sorted(glob.glob(os.path.join(ckpt_dir, "fastspeech2_*.pth.tar")))
     if exported:
         return exported[0]
     raise FileNotFoundError(f"No checkpoint in {ckpt_dir}")
