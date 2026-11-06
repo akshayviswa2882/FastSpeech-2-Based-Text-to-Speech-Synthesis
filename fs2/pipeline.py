@@ -102,7 +102,8 @@ def available_cpus():
         return os.cpu_count() or 1
 
 
-def align(preprocess_config, mode, pretrained_model=None, num_jobs=None, beam=10, retry_beam=40):
+def align(preprocess_config, mode, pretrained_model=None, num_jobs=None, beam=10, retry_beam=40,
+          mfa_config=None):
     """mode: 'pretrained' (mfa align with a downloaded model) or 'train' (mfa train from scratch).
 
     beam / retry_beam: a wide beam rescues hard utterances when aligning with a good pretrained
@@ -130,6 +131,8 @@ def align(preprocess_config, mode, pretrained_model=None, num_jobs=None, beam=10
     else:
         model_out = os.path.join(p["preprocessed_path"], "mfa_acoustic_model.zip")
         cmd = mfa_cmd + ["train", raw, lex, model_out, "--output_directory", tg] + common
+        if mfa_config:
+            cmd += ["--config_path", mfa_config]
     print(" ".join(cmd))
     subprocess.run(cmd, check=True, env=env)
     n = sum(f.endswith(".TextGrid") for _, _, fs in os.walk(tg) for f in fs)

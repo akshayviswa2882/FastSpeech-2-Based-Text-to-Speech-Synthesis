@@ -31,6 +31,7 @@ def load_config(config_path):
                 d[k] = os.path.normpath(os.path.join(base, v))
 
     resolve(cfg["preprocess"]["path"])
+    resolve(cfg["preprocess"].get("alignment", {}))
     resolve(cfg["train"]["path"])
     language = cfg["language"]
     for section in ("preprocess", "model", "train"):

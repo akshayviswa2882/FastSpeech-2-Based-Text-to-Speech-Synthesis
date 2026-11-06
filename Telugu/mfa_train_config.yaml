@@ -1,0 +1,10 @@
+# MFA training recipe for the 2-speaker Telugu corpus.
+# Speaker-adaptive training (SAT) stages are dropped: MFA parallelises jobs per speaker, so with
+# 2 speakers SAT runs on ~2 cores and each iteration took >1 h; it also adds little for two
+# consistent studio voices. Monophone -> triphone -> LDA+MLLT is enough for TTS durations.
+beam: 10
+retry_beam: 40
+training:
+  - monophone: {}
+  - triphone: {}
+  - lda: {}

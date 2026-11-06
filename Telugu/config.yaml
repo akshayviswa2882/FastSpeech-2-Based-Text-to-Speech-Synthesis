@@ -28,6 +28,7 @@ preprocess:
     pretrained_model: null
     beam: 10                         # MFA defaults: wide beams stall from-scratch training on bad clips
     retry_beam: 40
+    mfa_config: ./mfa_train_config.yaml   # monophone -> triphone -> LDA (no SAT, see file)
   preprocessing:
     text:
       language: te
