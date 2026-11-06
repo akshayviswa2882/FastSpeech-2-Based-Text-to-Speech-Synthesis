@@ -1,0 +1,551 @@
+{
+ "summary": {
+  "asr_model": "openai/whisper-large-v3",
+  "speaker_for_test_sentences": "spkd270faea",
+  "test_sentences_synth": {
+   "wer": 25.81,
+   "cer": 11.48
+  },
+  "val_ground_truth": {
+   "wer": 5.48,
+   "cer": 2.67
+  },
+  "val_synth": {
+   "wer": 16.2,
+   "cer": 9.24
+  },
+  "n_val": 60
+ },
+ "utterances": [
+  {
+   "set": "test",
+   "id": "E1",
+   "speaker": "spkd270faea",
+   "ref": "the antidisestablishmentarianism movement gained considerable momentum during the parliamentary proceedings",
+   "hyp_synth": "van dyck's establishment in his movement didn't consider the momentum during the parliamentary proceedings",
+   "hyp_gt": null,
+   "wer_synth": 80.0,
+   "cer_synth": 22.43
+  },
+  {
+   "set": "test",
+   "id": "E2a",
+   "speaker": "spkd270faea",
+   "ref": "the orchestra's conduct during the ceremony was praised by the audience",
+   "hyp_synth": "the orchestra's conduct during the ceremony was praised by the audience",
+   "hyp_gt": null,
+   "wer_synth": 0.0,
+   "cer_synth": 0.0
+  },
+  {
+   "set": "test",
+   "id": "E2b",
+   "speaker": "spkd270faea",
+   "ref": "the researchers will conduct an experiment to evaluate the proposed method",
+   "hyp_synth": "the researchers will conduct an experiment to evaluate the proposed method",
+   "hyp_gt": null,
+   "wer_synth": 0.0,
+   "cer_synth": 0.0
+  },
+  {
+   "set": "test",
+   "id": "E3",
+   "speaker": "spkd270faea",
+   "ref": "the rhyth m of the orchestra changed unexpectedly",
+   "hyp_synth": "the idea of the orchestra changed unexpectedly",
+   "hyp_gt": null,
+   "wer_synth": 25.0,
+   "cer_synth": 14.29
+  },
+  {
+   "set": "test",
+   "id": "E4",
+   "speaker": "spkd270faea",
+   "ref": "the meeting will start at ten forty five ay em on twelfth november twenty twenty six so andaroo should arrive on time",
+   "hyp_synth": "the meeting will start at ten point four five am on twelfth november twenty twenty six so all doors should arrive on time",
+   "hyp_gt": null,
+   "wer_synth": 27.27,
+   "cer_synth": 14.53
+  },
+  {
+   "set": "val",
+   "id": "spk8c8b096f_00220",
+   "speaker": "spk8c8b096f",
+   "ref": "there are several escape rooms there are various adventure games that are nature themed like one has to cross a forest to",
+   "hyp_gt": "there are several escape rooms there are various adventure games that are nature themed like one has to cross a forest to",
+   "hyp_synth": "there are several escape rooms there are various adventure games that are nature themed like one has to cross a forest to"
+  },
+  {
+   "set": "val",
+   "id": "spk0c10633a_01367",
+   "speaker": "spk0c10633a",
+   "ref": "do i need to wear my slicker today",
+   "hyp_gt": "do i need to wear my slicker today",
+   "hyp_synth": "do i need to wear my slicker today"
+  },
+  {
+   "set": "val",
+   "id": "spk9f9079b8_02290",
+   "speaker": "spk9f9079b8",
+   "ref": "of a culture",
+   "hyp_gt": "of a culture",
+   "hyp_synth": "our culture"
+  },
+  {
+   "set": "val",
+   "id": "spk3210024f_00729",
+   "speaker": "spk3210024f",
+   "ref": "these needs should be met so that the students can thrive and be better learners",
+   "hyp_gt": "these needs should be met so that the students can thrive and be better learners",
+   "hyp_synth": "these needs should be met so that the students can thrive and be better learners"
+  },
+  {
+   "set": "val",
+   "id": "spk3a26ae56_00478",
+   "speaker": "spk3a26ae56",
+   "ref": "and makes jokes about it",
+   "hyp_gt": "and makes jokes about it",
+   "hyp_synth": "makes jokes about it"
+  },
+  {
+   "set": "val",
+   "id": "spk648c7d19_02466",
+   "speaker": "spk648c7d19",
+   "ref": "discontinue use of lights",
+   "hyp_gt": "discontinue use of lights",
+   "hyp_synth": "discontinue use of lights"
+  },
+  {
+   "set": "val",
+   "id": "spk09ba5012_00094",
+   "speaker": "spk09ba5012",
+   "ref": "we differ from other countries in terms of food in terms of dress",
+   "hyp_gt": "will differ from other countries in terms of food in terms of dress",
+   "hyp_synth": "we differ from other countries in terms of food in terms of dress"
+  },
+  {
+   "set": "val",
+   "id": "spkfe25acaa_04827",
+   "speaker": "spkfe25acaa",
+   "ref": "culture values are also changing with their forms",
+   "hyp_gt": "culture values are also changing with their forms",
+   "hyp_synth": "culture values are also changing with their forms"
+  },
+  {
+   "set": "val",
+   "id": "spk159a5ee2_00065",
+   "speaker": "spk159a5ee2",
+   "ref": "i use some words",
+   "hyp_gt": "i use some words",
+   "hyp_synth": "i use some words"
+  },
+  {
+   "set": "val",
+   "id": "spkd2f8b715_01487",
+   "speaker": "spkd2f8b715",
+   "ref": "i would like to turn on the notifications for offers and rewards in freecharge",
+   "hyp_gt": "i would like to turn on the notifications for offers and rewards in free charge",
+   "hyp_synth": "i would like to turn on the notifications for offers and rewards and recharges"
+  },
+  {
+   "set": "val",
+   "id": "spkf9d3940d_00739",
+   "speaker": "spkf9d3940d",
+   "ref": "tell me about gold public provident fund savings scheme available here",
+   "hyp_gt": "tell me about gold public provident fund saving scheme available here",
+   "hyp_synth": "tell me up or call public profit and fund savings scheme available here"
+  },
+  {
+   "set": "val",
+   "id": "spkc5fc3ea9_05017",
+   "speaker": "spkc5fc3ea9",
+   "ref": "offered in these colleges",
+   "hyp_gt": "offered in these colleges",
+   "hyp_synth": "offered in these colleges"
+  },
+  {
+   "set": "val",
+   "id": "spk8063b969_05619",
+   "speaker": "spk8063b969",
+   "ref": "replace my order of product saravanas sweets imli by five pieces dp cake decorator",
+   "hyp_gt": "replace my order of product saravana sweets imli by five pieces dp cake decorator",
+   "hyp_synth": "replace my order of products i have on a sweet singly by five pieces p a k decorator"
+  },
+  {
+   "set": "val",
+   "id": "spkfe25acaa_02190",
+   "speaker": "spkfe25acaa",
+   "ref": "such changes",
+   "hyp_gt": "such changes",
+   "hyp_synth": "such changes"
+  },
+  {
+   "set": "val",
+   "id": "spkbff59894_05864",
+   "speaker": "spkbff59894",
+   "ref": "can you check if my efpo claim with tracking id four billion eight hundred forty nine million eight hundred eighty two thousand three hundred forty eight is settled",
+   "hyp_gt": "can you check if my efpo claim with tracking id four billion eight hundred forty nine million eight hundred eighty two thousand three hundred forty eight is settled",
+   "hyp_synth": "can you check if my food book lane with trucking with food ban eight hundred forty nine million eight hundred eighty two thousand three hundred forty eight is settled"
+  },
+  {
+   "set": "val",
+   "id": "spk50dac51b_03449",
+   "speaker": "spk50dac51b",
+   "ref": "the state of maharashtra is doing fairly well as far as the collaboration is concerned",
+   "hyp_gt": "the state of maharashtra is doing fairly well as far as the collaboration is concerned",
+   "hyp_synth": "the state of mahashtra is doing fairly well as far as the collaboration is concerned"
+  },
+  {
+   "set": "val",
+   "id": "spk40215e6b_03980",
+   "speaker": "spk40215e6b",
+   "ref": "its beaches that is goa wildlife sanctuaries or reserves have become an escape room to both of us",
+   "hyp_gt": "its beaches that is goa wildlife sanctuaries or reserves have become an escape room to both of us",
+   "hyp_synth": "its features i e goa wildlife sanctuaries or reserves have become an escape room to both of us"
+  },
+  {
+   "set": "val",
+   "id": "spkcbf3fb3d_04957",
+   "speaker": "spkcbf3fb3d",
+   "ref": "more expensive than other websites",
+   "hyp_gt": "more expensive than other websites",
+   "hyp_synth": "more expensive than other websites"
+  },
+  {
+   "set": "val",
+   "id": "spkcfdf65f7_05840",
+   "speaker": "spkcfdf65f7",
+   "ref": "we also use it while making chutney and chutney pudi they are very good for hair growth coriander leaves are used for garnishing purposes and they also add a very good flavor to the food",
+   "hyp_gt": "we also use it while making chutney and chutney puddi they are very good for hair growth coriander leaves are used for garnishing purposes and they also add a very good flavor to the food",
+   "hyp_synth": "we also use it while making chutney and chutney putti they are very good for hair growth coriander leaves are used for varnishing purposes and they also add very good flavor to the food"
+  },
+  {
+   "set": "val",
+   "id": "spk4ca697bf_02744",
+   "speaker": "spk4ca697bf",
+   "ref": "watching videos on youtube and then i gathered all the required materials for",
+   "hyp_gt": "watching videos on youtube and then i gathered all the required materials for",
+   "hyp_synth": "watching videos on youtube and then i gathered all the required materials for"
+  },
+  {
+   "set": "val",
+   "id": "spk84f04da8_04728",
+   "speaker": "spk84f04da8",
+   "ref": "actually in my state there is hardly any coordination among different levels of education",
+   "hyp_gt": "actually in my state there is hardly any coordination among different levels of education",
+   "hyp_synth": "actually in my state there is hardly any coordination among different levels of education"
+  },
+  {
+   "set": "val",
+   "id": "spkf0bb6d4e_06312",
+   "speaker": "spkf0bb6d4e",
+   "ref": "coming to the religious institute that run the religious school they are definitely welcome in the state",
+   "hyp_gt": "coming to the religious institute that run the religious school they are definitely welcome in the state",
+   "hyp_synth": "coming to the religious institute that run the religious school they are definitely welcome in the state"
+  },
+  {
+   "set": "val",
+   "id": "spkc5fc3ea9_01553",
+   "speaker": "spkc5fc3ea9",
+   "ref": "claim latest reward from mobikwik",
+   "hyp_gt": "claim latest reward from mobiquik",
+   "hyp_synth": "claim latest reward from mcvic"
+  },
+  {
+   "set": "val",
+   "id": "spk9842ddc5_02122",
+   "speaker": "spk9842ddc5",
+   "ref": "how does the english language differ from the regional dialects within your state",
+   "hyp_gt": "how does the english language differ from the regional dialects within your state",
+   "hyp_synth": "how does the english language differ from the regional dialects within your state"
+  },
+  {
+   "set": "val",
+   "id": "spkd270faea_06235",
+   "speaker": "spkd270faea",
+   "ref": "some interesting and unusual words or phrases in the english language that i find particularly",
+   "hyp_gt": "some interesting and unusual words or phrases in the english language that i find particularly",
+   "hyp_synth": "some interesting and unusual words or phrases in the english language that i find particularly"
+  },
+  {
+   "set": "val",
+   "id": "spk5e0ae12b_04066",
+   "speaker": "spk5e0ae12b",
+   "ref": "there are actually a lot of book series that i like that i would consider favorites",
+   "hyp_gt": "there are actually a lot of book series that i like that i would consider favorites",
+   "hyp_synth": "there are actually a lot of book series that i like that i would consider favorites"
+  },
+  {
+   "set": "val",
+   "id": "spkfa6ce432_01859",
+   "speaker": "spkfa6ce432",
+   "ref": "or government college of art and craft",
+   "hyp_gt": "or government college of art and craft",
+   "hyp_synth": "or government college of art and craft"
+  },
+  {
+   "set": "val",
+   "id": "spkdc5e8550_03649",
+   "speaker": "spkdc5e8550",
+   "ref": "has the payment been confirmed for my order containing bella vita organic eyelift under eye cream gel manna dates rich first baby food and one organic turmeric powder",
+   "hyp_gt": "has the payment been confirmed for my order containing bella vita organic eye lift under eye cream gel manna dates rich first baby food and one organic turmeric powder",
+   "hyp_synth": "has the pigment been confirmed for my order containing bella white organic elephant eye cream gel mandates rich first baby food and one organic turmeric powder"
+  },
+  {
+   "set": "val",
+   "id": "spka0a0232d_03377",
+   "speaker": "spka0a0232d",
+   "ref": "reveal the new scratch card in citrus",
+   "hyp_gt": "reveal the new scratch card in citrus",
+   "hyp_synth": "reveal the new scratch cut in citrus"
+  },
+  {
+   "set": "val",
+   "id": "spkcfdf65f7_06611",
+   "speaker": "spkcfdf65f7",
+   "ref": "there are primary health centers in every village which provide free medical",
+   "hyp_gt": "there are primary health centers in every village which provide free medical services",
+   "hyp_synth": "there are primary health centers in every village which provide free medical"
+  },
+  {
+   "set": "val",
+   "id": "spkfae3eb5f_04903",
+   "speaker": "spkfae3eb5f",
+   "ref": "even the christians and the muslims they follow their own religion in their own might in the state",
+   "hyp_gt": "even the christians and the muslims they follow their own religion in their own might in the state",
+   "hyp_synth": "even the christians and the muslims they follow their own religion in their own might in the state"
+  },
+  {
+   "set": "val",
+   "id": "spkf0bb6d4e_01456",
+   "speaker": "spkf0bb6d4e",
+   "ref": "who are just the extension of your own family who make your life easy and then if you tell that",
+   "hyp_gt": "who are just the extension of your own family who make your life easy and then if you tell that you love",
+   "hyp_synth": "who are just the extension of your own family make your life easy and then if you tell that"
+  },
+  {
+   "set": "val",
+   "id": "spk955c03da_01625",
+   "speaker": "spk955c03da",
+   "ref": "in the academic year twenty twenty one twenty twenty two can you list all the aicte approved colleges offering upper graduate level programs in architecture",
+   "hyp_gt": "in the academic year twenty twenty one twenty twenty two can you list all the aicte approved colleges offering upper graduate level programs in architecture",
+   "hyp_synth": "in the academic year twenty twenty one twenty twenty two can you list all the apt approved colleges offering upper graduate level programs in architecture"
+  },
+  {
+   "set": "val",
+   "id": "spk0e19b01d_05288",
+   "speaker": "spk0e19b01d",
+   "ref": "use my uan number one hundred sixteen billion one hundred ninety five million nine hundred twenty nine thousand five hundred fifty three to generate epfo passbook statement",
+   "hyp_gt": "use my uan number one hundred sixteen billion one hundred ninety five million nine hundred twenty nine thousand five hundred fifty three to generate epa for passbook statement",
+   "hyp_synth": "use my running number one hundred sixteen one hundred nine five thousand nine hundred twenty nine five hundred three to generate a for passbook statement"
+  },
+  {
+   "set": "val",
+   "id": "spkfae3eb5f_02302",
+   "speaker": "spkfae3eb5f",
+   "ref": "all the administrative purposes as well",
+   "hyp_gt": "all the administrative purposes as well",
+   "hyp_synth": "all the administrative purposes as well"
+  },
+  {
+   "set": "val",
+   "id": "spk4e725862_01366",
+   "speaker": "spk4e725862",
+   "ref": "dey started his career in playback singing with the movie tamanna in nineteen forty two",
+   "hyp_gt": "they started his career in playback singing with the movie tamanna in nineteen forty two",
+   "hyp_synth": "they started his caring playback singing with the movie commander in nineteen forty two"
+  },
+  {
+   "set": "val",
+   "id": "spk2f72a6b3_06503",
+   "speaker": "spk2f72a6b3",
+   "ref": "water pollution we can also consider it also very big reason major reason which have caused in our district jammu",
+   "hyp_gt": "water pollution we can also consider it also very big reason major reason which have caused in our district jammu",
+   "hyp_synth": "water pollution we can also consider it also very big reason major reason which have caused in our district jammu"
+  },
+  {
+   "set": "val",
+   "id": "spkfae3eb5f_02816",
+   "speaker": "spkfae3eb5f",
+   "ref": "so these places remain clouded from them which is not ideal",
+   "hyp_gt": "so these places remain clouded from them which is not ideal",
+   "hyp_synth": "so these places remain clouded from them which is not a detail"
+  },
+  {
+   "set": "val",
+   "id": "spk45b96846_01252",
+   "speaker": "spk45b96846",
+   "ref": "the scenes of the movie of john abraham riding the suzuki hayabusa it made me fall in love with biking",
+   "hyp_gt": "the scenes of the movie of john abraham riding the suzuki hayabusa made me fall in love with biking",
+   "hyp_synth": "the scenes of the movie of sunwebber have riding the sasuke here so it made me fall in love with biking"
+  },
+  {
+   "set": "val",
+   "id": "spk51aec32f_05280",
+   "speaker": "spk51aec32f",
+   "ref": "my money got deducted but my order of devbhumi certified organic honey is not confirmed",
+   "hyp_gt": "my money got deducted but my order of devvumi certified organic honey is not confirmed",
+   "hyp_synth": "my money got deducted but my order of a bumi certified organic honey is not confirmed"
+  },
+  {
+   "set": "val",
+   "id": "spk363eb2dd_03436",
+   "speaker": "spk363eb2dd",
+   "ref": "bangalore is known as a city of entrepreneurs",
+   "hyp_gt": "bangalore is known as a city of entrepreneurs",
+   "hyp_synth": "bangalore is known as a city of entrepreneurs"
+  },
+  {
+   "set": "val",
+   "id": "spka3635f00_05279",
+   "speaker": "spka3635f00",
+   "ref": "i require thirty seven units of oh irradiated rbc component can you show me all nearest blood banks in district thoubal having it",
+   "hyp_gt": "i require thirty seven units of oh positive irradiated rbc component can you show me all nearest blood banks in district",
+   "hyp_synth": "i require thirty seven units of fully radiated back sick component and you show me all nervous bloodbends in district while having it"
+  },
+  {
+   "set": "val",
+   "id": "spkfb8214e6_00966",
+   "speaker": "spkfb8214e6",
+   "ref": "the items borges vegan hazelnut drink",
+   "hyp_gt": "the item's gorgeous vegan hazelnut drink",
+   "hyp_synth": "the items bought his vegan hazelnut drink"
+  },
+  {
+   "set": "val",
+   "id": "spke889cf77_01007",
+   "speaker": "spke889cf77",
+   "ref": "your mpin is invalid for mobile number ninety eight billion six hundred thirty one million two hundred ninety seven thousand five hundred thirty six",
+   "hyp_gt": "your m pin is invalid for mobile number ninety eight thousand six hundred thirty one two hundred ninety seven thousand five hundred thirty six",
+   "hyp_synth": "your pin is in wallet for mobile number ninety eight thousand six hundred thirty one two hundred ninety seven five hundred thirty six"
+  },
+  {
+   "set": "val",
+   "id": "spk3210024f_03077",
+   "speaker": "spk3210024f",
+   "ref": "rate my order of two astonish antibacterial surface cleanser as five stars",
+   "hyp_gt": "rate my order of two astonish antibacterial surface cleanser as five stars",
+   "hyp_synth": "spread my word of twist donation tea bacterial surface cleanser has five stars"
+  },
+  {
+   "set": "val",
+   "id": "spk84f04da8_03156",
+   "speaker": "spk84f04da8",
+   "ref": "yes there are several places one has traveled which are unique in their own ways and which have natural settings",
+   "hyp_gt": "yes there are several places one has traveled which are unique in their own ways and which have natural settings",
+   "hyp_synth": "yes there are several places one has traveled which are unique in their own ways and which have natural settings"
+  },
+  {
+   "set": "val",
+   "id": "spk8eb50476_02343",
+   "speaker": "spk8eb50476",
+   "ref": "zig zag carrying basket yesterday",
+   "hyp_gt": "zig zag carrying basket yesterday",
+   "hyp_synth": "zigzag carrying basket yesterday"
+  },
+  {
+   "set": "val",
+   "id": "spk8063b969_01650",
+   "speaker": "spk8063b969",
+   "ref": "dear arah lot of people are graduating from english medium schools",
+   "hyp_gt": "there are a lot of people graduating from english medium schools",
+   "hyp_synth": "a lot of people are graduating from english medium schools"
+  },
+  {
+   "set": "val",
+   "id": "spkded114f6_05151",
+   "speaker": "spkded114f6",
+   "ref": "pay two hundred rupees more to the last scanned qr code on phonepe add a remark saying tip",
+   "hyp_gt": "pay two hundred rupees more to the last scanned qr code on phone pay add a remark saying tip",
+   "hyp_synth": "pay two hundred rupees more to the last scanned crew code on phone or pad a remark saying"
+  },
+  {
+   "set": "val",
+   "id": "spk4a20375b_05129",
+   "speaker": "spk4a20375b",
+   "ref": "but it will taken generation to reach there",
+   "hyp_gt": "but it will take a generation to reach there",
+   "hyp_synth": "but it will take a generation to reach there"
+  },
+  {
+   "set": "val",
+   "id": "spk9d1c90d4_00808",
+   "speaker": "spk9d1c90d4",
+   "ref": "back to the earth as a kind of a punishment",
+   "hyp_gt": "earth as a kind of a punishment",
+   "hyp_synth": "back to the earth as a kind of a punishment"
+  },
+  {
+   "set": "val",
+   "id": "spkd6e1ff15_02297",
+   "speaker": "spkd6e1ff15",
+   "ref": "so all this diversity of our languages have definitely impacted english",
+   "hyp_gt": "so all this diversity of our languages have definitely impacted english",
+   "hyp_synth": "so all this diversity of our languages have definitely impacted english"
+  },
+  {
+   "set": "val",
+   "id": "spk7881fd21_00517",
+   "speaker": "spk7881fd21",
+   "ref": "in our state are i think",
+   "hyp_gt": "in our state are i think",
+   "hyp_synth": "in our state i think"
+  },
+  {
+   "set": "val",
+   "id": "spk1f0a057d_01049",
+   "speaker": "spk1f0a057d",
+   "ref": "what is the status of my epfo claim having tracking id nine billion nine hundred fifty seven million two hundred fifty seven thousand eight hundred fifty six",
+   "hyp_gt": "what is the status of my epfo claim having a tracking id nine billion nine hundred fifty seven million two hundred fifty seven thousand eight hundred fifty six",
+   "hyp_synth": "what is the status of my four claim having tracking in nine thousand nine hundred fifty seven two hundred fifty seven eight hundred fifty six"
+  },
+  {
+   "set": "val",
+   "id": "spk315efb6f_00895",
+   "speaker": "spk315efb6f",
+   "ref": "hide my personal information from people outside my contact list on phonepe",
+   "hyp_gt": "hide my personal information from people outside my contact list on phone pay",
+   "hyp_synth": "hide my post it information from people outside my contact list on phone app"
+  },
+  {
+   "set": "val",
+   "id": "spkcfdf65f7_00367",
+   "speaker": "spkcfdf65f7",
+   "ref": "veeragase kamsale",
+   "hyp_gt": "veeragasai kamsaale",
+   "hyp_synth": "vargas council"
+  },
+  {
+   "set": "val",
+   "id": "spkca25e939_01538",
+   "speaker": "spkca25e939",
+   "ref": "besides this there are fairs which are held at the end of the event",
+   "hyp_gt": "besides this there are fairs which are held at the end of the event",
+   "hyp_synth": "besides this there are fairs which are held at the end of the event"
+  },
+  {
+   "set": "val",
+   "id": "spkf0fd6ddf_04974",
+   "speaker": "spkf0fd6ddf",
+   "ref": "ahmedabad became the capital of the new state of gujarat",
+   "hyp_gt": "ahmedabad became the capital of the new state of gujarat",
+   "hyp_synth": "amagad became the capital of the new state of gujarat"
+  },
+  {
+   "set": "val",
+   "id": "spkdbe8a6f2_05913",
+   "speaker": "spkdbe8a6f2",
+   "ref": "resend otp to my epfo registered mobile number eighty six billion seventy four million four hundred ninety seven thousand six hundred fourteen",
+   "hyp_gt": "resend otp to my epfo registered mobile number eighty six billion seventy four million four hundred ninety seven thousand six hundred fourteen",
+   "hyp_synth": "please send a call to my app for registered mobile number eight thousand six hundred seventy four four hundred ninety seven six thousand one hundred forty three"
+  },
+  {
+   "set": "val",
+   "id": "spk648c7d19_03324",
+   "speaker": "spk648c7d19",
+   "ref": "so bohag bihu is celebrated in the month of bohag and magh bihu is celebrated in the month of magh",
+   "hyp_gt": "so bhoag bihu is celebrated in the month of bhoag and magh bihu is celebrated in the month of magh",
+   "hyp_synth": "so gohad bih is celebrated in the month of gohad and mahabih who is celebrated in the month of mahabih"
+  }
+ ]
+}

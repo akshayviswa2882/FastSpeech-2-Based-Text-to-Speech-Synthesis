@@ -1,0 +1,5 @@
+{
+ "default_speaker": "te_0",
+ "source_checkpoint": "100000.pth.tar",
+ "step": 100000
+}

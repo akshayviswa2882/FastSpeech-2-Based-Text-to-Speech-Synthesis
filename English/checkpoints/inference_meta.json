@@ -1,0 +1,5 @@
+{
+ "default_speaker": "spkd270faea",
+ "source_checkpoint": "100000.pth.tar",
+ "step": 100000
+}
