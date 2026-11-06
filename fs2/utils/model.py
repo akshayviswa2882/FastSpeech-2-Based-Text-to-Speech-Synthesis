@@ -31,7 +31,9 @@ def load_config(config_path):
                 d[k] = os.path.normpath(os.path.join(base, v))
 
     resolve(cfg["preprocess"]["path"])
-    resolve(cfg["preprocess"].get("alignment", {}))
+    al = cfg["preprocess"].get("alignment", {})
+    if al.get("mfa_config") and not os.path.isabs(al["mfa_config"]):
+        al["mfa_config"] = os.path.normpath(os.path.join(base, al["mfa_config"]))
     resolve(cfg["train"]["path"])
     language = cfg["language"]
     for section in ("preprocess", "model", "train"):
