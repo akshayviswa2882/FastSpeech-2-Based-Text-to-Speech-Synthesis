@@ -63,12 +63,20 @@ def main():
     asr_name = args.asr_model or DEFAULT_ASR[lang]
     asr = pipeline("automatic-speech-recognition", model=asr_name, device=device,
                    torch_dtype=torch.float16 if device == "cuda" else torch.float32)
+    if not asr_name.startswith("openai/"):
+        # Community fine-tunes (e.g. vasista22/whisper-telugu-large-v2) ship a pre-2023 generation
+        # config that current transformers rejects together with `language=`. Use the official
+        # config of the base checkpoint (fix from huggingface/transformers#25084).
+        from transformers import GenerationConfig
+        base = "openai/whisper-large-v2" if "large-v2" in asr_name else "openai/whisper-large-v3"
+        asr.model.generation_config = GenerationConfig.from_pretrained(base)
     gen = {"task": "transcribe", "language": "en" if lang == "english" else "te"}
 
     def transcribe(wav, sr):
-        wav = np.asarray(wav, dtype=np.float32)
-        if wav.dtype != np.float32 or np.abs(wav).max() > 1.5:
-            wav = wav / 32768.0
+        wav = np.asarray(wav)
+        if np.issubdtype(wav.dtype, np.integer):
+            wav = wav.astype(np.float32) / 32768.0
+        wav = wav.astype(np.float32)
         wav16 = librosa.resample(wav, orig_sr=sr, target_sr=16000)
         return asr({"raw": wav16, "sampling_rate": 16000}, generate_kwargs=gen)["text"]
 
