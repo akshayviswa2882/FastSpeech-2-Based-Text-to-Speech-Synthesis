@@ -102,8 +102,13 @@ def available_cpus():
         return os.cpu_count() or 1
 
 
-def align(preprocess_config, mode, pretrained_model=None, num_jobs=None):
-    """mode: 'pretrained' (mfa align with a downloaded model) or 'train' (mfa train from scratch)."""
+def align(preprocess_config, mode, pretrained_model=None, num_jobs=None, beam=10, retry_beam=40):
+    """mode: 'pretrained' (mfa align with a downloaded model) or 'train' (mfa train from scratch).
+
+    beam / retry_beam: a wide beam rescues hard utterances when aligning with a good pretrained
+    model, but when *training* from scratch the few utterances that fail the first pass are
+    re-decoded with the retry beam in every iteration, which can turn a 1-hour run into a day.
+    Keep MFA's defaults (10 / 40) for training."""
     p = preprocess_config["path"]
     mfa_cmd = os.environ.get("MFA_CMD", "mfa").split()
     if shutil.which(mfa_cmd[0]) is None:
@@ -118,7 +123,7 @@ def align(preprocess_config, mode, pretrained_model=None, num_jobs=None):
     env.setdefault("MFA_ROOT_DIR", os.path.join(os.path.dirname(p["raw_path"]), "mfa_work"))
     if os.path.exists(tg):
         shutil.rmtree(tg)
-    common = ["-j", jobs, "--clean", "--overwrite", "--beam", "100", "--retry_beam", "400"]
+    common = ["-j", jobs, "--clean", "--overwrite", "--beam", str(beam), "--retry_beam", str(retry_beam)]
     if mode == "pretrained":
         subprocess.run(mfa_cmd + ["model", "download", "acoustic", pretrained_model], check=False, env=env)
         cmd = mfa_cmd + ["align", raw, lex, pretrained_model, tg] + common

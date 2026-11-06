@@ -26,6 +26,8 @@ preprocess:
   alignment:
     mode: pretrained
     pretrained_model: english_us_arpa
+    beam: 100                        # wide search is cheap with a pretrained model, rescues noisy clips
+    retry_beam: 400
   preprocessing:
     text:
       language: en

@@ -26,6 +26,8 @@ preprocess:
   alignment:
     mode: train                      # no pretrained Telugu MFA model: train on the corpus
     pretrained_model: null
+    beam: 10                         # MFA defaults: wide beams stall from-scratch training on bad clips
+    retry_beam: 40
   preprocessing:
     text:
       language: te

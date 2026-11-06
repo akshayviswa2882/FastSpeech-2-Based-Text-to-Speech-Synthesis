@@ -129,7 +129,8 @@ def main():
         pipeline.prepare(preprocess_config, rows, frontend, speaker_of, test_sentences=tests)
     if args.stage == "align":
         a = preprocess_config["alignment"]
-        pipeline.align(preprocess_config, a["mode"], a.get("pretrained_model"), args.jobs)
+        pipeline.align(preprocess_config, a["mode"], a.get("pretrained_model"), args.jobs,
+                       a.get("beam", 10), a.get("retry_beam", 40))
     if args.stage in ("features", "all"):
         if args.stage == "all" and not os.path.isdir(preprocess_config["path"]["textgrid_path"]):
             print("No TextGrids yet - run `--stage align` in the aligner env, then `--stage features`.")
