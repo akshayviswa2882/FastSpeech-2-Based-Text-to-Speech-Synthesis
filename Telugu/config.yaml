@@ -81,8 +81,8 @@ train:
   num_workers: 4
   path:
     ckpt_path: ./checkpoints
-    log_path: ../logs/English
-    result_path: ../Results/English
+    log_path: ../logs/Telugu
+    result_path: ../Results/Telugu
   optimizer:
     batch_size: 16
     group_size: 4

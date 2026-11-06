@@ -36,6 +36,13 @@ def load_config(config_path):
         al["mfa_config"] = os.path.normpath(os.path.join(base, al["mfa_config"]))
     resolve(cfg["train"]["path"])
     language = cfg["language"]
+    others = {"english", "telugu"} - {language.lower()}
+    for section_name in ("preprocess", "train"):
+        for k, v in cfg[section_name]["path"].items():
+            parts = {x.lower() for x in v.replace("\\", "/").split("/")}
+            if parts & others:
+                raise ValueError(f"{config_path}: {section_name}.path.{k} = {v} points at another "
+                                 f"language's folder (language: {language})")
     for section in ("preprocess", "model", "train"):
         cfg[section]["language"] = language
     return cfg["preprocess"], cfg["model"], cfg["train"], cfg
