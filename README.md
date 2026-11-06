@@ -39,6 +39,22 @@ FastSpeech 2 + HiFi-GAN speaking the same sentences with the same speaker.
 CER is the meaningful metric for Telugu: it is agglutinative, so long words make WER harsh even on
 real recordings (28.9 %). Per-utterance transcripts are in `Results/<Lang>/asr_eval.json`.
 
+### Listen / look
+
+| | English | Telugu |
+|---|---|---|
+| Test audio | [E1](Results/English/test_generated_audios/E1.wav) · [E2a](Results/English/test_generated_audios/E2a.wav) · [E2b](Results/English/test_generated_audios/E2b.wav) · [E3](Results/English/test_generated_audios/E3.wav) · [E4](Results/English/test_generated_audios/E4.wav) | [T1](Results/Telugu/test_generated_audios/T1.wav) · [T2a](Results/Telugu/test_generated_audios/T2a.wav) · [T2b](Results/Telugu/test_generated_audios/T2b.wav) · [T3](Results/Telugu/test_generated_audios/T3.wav) · [T4](Results/Telugu/test_generated_audios/T4.wav) |
+| Loss curves | [training](Results/English/training_loss.png) · [validation](Results/English/validation_loss.png) · [train vs val](Results/English/train_vs_val.png) | [training](Results/Telugu/training_loss.png) · [validation](Results/Telugu/validation_loss.png) · [train vs val](Results/Telugu/train_vs_val.png) |
+
+Heteronym "conduct": predicted F0 for the noun (E2a) and the verb (E2b):
+
+![E2a pitch](Results/English/variance_adaptor_plots/pitch/E2a.png)
+![E2b pitch](Results/English/variance_adaptor_plots/pitch/E2b.png)
+
+Telugu T4 (numbers, date and time expanded by the normaliser): predicted phoneme durations:
+
+![T4 duration](Results/Telugu/variance_adaptor_plots/duration/T4.png)
+
 ### Observations
 
 - **Data quality beats data quantity per speaker.** Telugu (2 studio speakers, ~2.5 h each) loses
